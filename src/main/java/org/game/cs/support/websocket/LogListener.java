@@ -1,5 +1,7 @@
 package org.game.cs.support.websocket;
 
+import java.util.Date;
+
 import org.vertx.java.core.Handler;
 import org.vertx.java.core.http.HttpServer;
 import org.vertx.java.core.http.ServerWebSocket;
@@ -12,10 +14,18 @@ public class LogListener extends Verticle {
         HttpServer server = vertx.createHttpServer();
 
         server.websocketHandler(new Handler<ServerWebSocket>() {
-            public void handle(ServerWebSocket ws) {
+            public void handle(final ServerWebSocket ws) {
 
                 if (ws.path.startsWith("/websocket")) {
-                    ws.writeTextFrame("alma");
+                    for (int i = 0; i < 10; i++) {
+                        ws.writeTextFrame(new Date().toString());
+                        try {
+                            Thread.sleep(2000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    ws.close();
                 } else {
                     ws.reject();
                 }
@@ -23,5 +33,4 @@ public class LogListener extends Verticle {
         }).listen(5555);
 
     }
-
 }
