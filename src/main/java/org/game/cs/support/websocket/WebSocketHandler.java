@@ -4,12 +4,14 @@ import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.game.cs.support.log.LogEvent;
+import org.game.cs.support.log.Observer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vertx.java.core.Handler;
 import org.vertx.java.core.http.ServerWebSocket;
 
-public class WebSocketHandler implements Handler<ServerWebSocket> {
+public class WebSocketHandler implements Handler<ServerWebSocket>, Observer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WebSocketHandler.class);
     private Map<String, ServerWebSocket> listeners = new ConcurrentHashMap<>();
@@ -51,6 +53,11 @@ public class WebSocketHandler implements Handler<ServerWebSocket> {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void update(LogEvent event) {
+        LOGGER.info("event received: " + event.getLog());
     }
 
 }
