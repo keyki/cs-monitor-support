@@ -41,7 +41,6 @@
 
 	</dependencies>
 
-
 	<build>
 		<plugins>
 			<plugin>
@@ -49,7 +48,7 @@
 				<artifactId>vertx-maven-plugin</artifactId>
 				<version>1.2.3.4</version>
 				<configuration>
-					<verticleName>org.game.cs.support.websocket.LogListener</verticleName>
+					<verticleName>org.game.cs.support.websocket.Server</verticleName>
 				</configuration>
 			</plugin>
 		</plugins>
