@@ -86,7 +86,7 @@ public class LogReceiver implements Observable, Runnable {
     }
 
     private String getSender(DatagramPacket packet) {
-        return packet.getAddress().getHostAddress() + ":" + packet.getPort();
+        return packet.getAddress().getHostAddress() + ":43139";
     }
 
     private DatagramPacket reveive() throws IOException {
