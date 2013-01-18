@@ -9,7 +9,7 @@ import java.util.Date;
 public class ServerLogSenderSimulator {
 
     public static void main(String[] args) throws IOException {
-        DatagramSocket socket = new DatagramSocket(new InetSocketAddress("localhost", 27015));
+        DatagramSocket socket = new DatagramSocket(new InetSocketAddress("localhost", 43139));
         tempEvent(socket);
     }
 

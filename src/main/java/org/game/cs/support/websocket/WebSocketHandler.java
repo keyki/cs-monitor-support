@@ -2,6 +2,7 @@ package org.game.cs.support.websocket;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -66,15 +67,17 @@ public class WebSocketHandler implements Handler<ServerWebSocket>, Observer {
     public void update(LogEvent event) {
         LOGGER.info("event received: " + event.getMessage() + " from: " + event.getSender());
         List<ServerWebSocket> webSocketList = getWebSocketList(event.getSender());
-        if (webSocketList != null) {
-            for (ServerWebSocket webSocket : webSocketList) {
-                webSocket.writeTextFrame(event.getMessage());
-            }
+        for (ServerWebSocket webSocket : webSocketList) {
+            webSocket.writeTextFrame(event.getMessage());
         }
     }
 
     private List<ServerWebSocket> getWebSocketList(String address) {
-        return listeners.get(address);
+        if (listeners.get(address) == null) {
+            return Collections.emptyList();
+        } else {
+            return listeners.get(address);
+        }
     }
 
 }
