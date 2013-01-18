@@ -1,11 +1,10 @@
 package org.game.cs.support.websocket;
 
-import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.game.cs.support.log.LogEvent;
 import org.game.cs.support.log.Observer;
+import org.game.cs.support.log.event.LogEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vertx.java.core.Handler;
@@ -20,7 +19,6 @@ public class WebSocketHandler implements Handler<ServerWebSocket>, Observer {
     public void handle(ServerWebSocket event) {
         if (isItGoodPath(event)) {
             registerListener(getServerAddress(event.path), event);
-            tempEvent(event);
         } else {
             rejectConnection(event);
         }
@@ -44,20 +42,15 @@ public class WebSocketHandler implements Handler<ServerWebSocket>, Observer {
         return path.split("/")[2];
     }
 
-    private void tempEvent(ServerWebSocket event) {
-        for (int i = 0; i < 20; i++) {
-            event.writeTextFrame(new Date().toString());
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     @Override
     public void update(LogEvent event) {
-        LOGGER.info("event received: " + event.getLog());
+        LOGGER.info("event received: " + event.getMessage());
+        ServerWebSocket webSocket = listeners.get(event.getSender());
+        if (webSocket != null) {
+            webSocket.writeTextFrame(event.getMessage());
+        } else {
+            LOGGER.info("didnt not find any websocket listening on: " + event.getSender());
+        }
     }
 
 }

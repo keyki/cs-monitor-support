@@ -2,8 +2,8 @@ package org.game.cs.support.log;
 
 import org.game.cs.support.log.event.LogEvent;
 
-public interface Observer {
+public interface LogProcessor {
     
-    void update(LogEvent event);
+    LogEvent process(String sender, String logMessage);
 
 }

@@ -1,5 +1,7 @@
 package org.game.cs.support.websocket;
 
+import java.net.SocketException;
+
 import org.game.cs.support.log.LogReceiver;
 import org.vertx.java.core.http.HttpServer;
 import org.vertx.java.deploy.Verticle;
@@ -10,7 +12,7 @@ public class Server extends Verticle {
     private LogReceiver logReceiver;
     private static final int SERVERPORT = 5555;
 
-    public Server() {
+    public Server() throws SocketException {
         socketHandler = new WebSocketHandler();
         logReceiver = new LogReceiver();
         logReceiver.registerObserver(socketHandler);
@@ -20,6 +22,7 @@ public class Server extends Verticle {
     public void start() throws Exception {
         HttpServer server = vertx.createHttpServer();
         server.websocketHandler(socketHandler).listen(SERVERPORT);
+        (new Thread(logReceiver)).start();
     }
 
 }

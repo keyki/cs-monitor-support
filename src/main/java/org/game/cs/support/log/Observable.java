@@ -1,5 +1,7 @@
 package org.game.cs.support.log;
 
+import org.game.cs.support.log.event.LogEvent;
+
 public interface Observable {
 
     void registerObserver(Observer observer);
