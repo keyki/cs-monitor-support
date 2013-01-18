@@ -74,8 +74,10 @@ public class WebSocketHandler implements Handler<ServerWebSocket>, Observer {
 
     private List<ServerWebSocket> getWebSocketList(String address) {
         if (listeners.get(address) == null) {
+            LOGGER.debug("didnt find any websocket listener for this address: " + address);
             return Collections.emptyList();
         } else {
+            LOGGER.info("found websocket listener for address: " + address);
             return listeners.get(address);
         }
     }
