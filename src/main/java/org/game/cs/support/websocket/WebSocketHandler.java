@@ -64,7 +64,7 @@ public class WebSocketHandler implements Handler<ServerWebSocket>, Observer {
 
     @Override
     public void update(LogEvent event) {
-        LOGGER.info("event received: " + event.getMessage());
+        LOGGER.info("event received: " + event.getMessage() + " from: " + event.getSender());
         List<ServerWebSocket> webSocketList = getWebSocketList(event.getSender());
         if (webSocketList != null) {
             for (ServerWebSocket webSocket : webSocketList) {
