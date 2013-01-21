@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
-import java.util.Date;
 
 public class ServerLogSenderSimulator {
 
@@ -16,7 +15,7 @@ public class ServerLogSenderSimulator {
     private static void tempEvent(DatagramSocket socket) throws IOException {
         for (int i = 0; i < 20; i++) {
             try {
-                byte[] bytes = new Date().toString().getBytes();
+                byte[] bytes = "15:56:45: \"Console<0>\" say \"pinaaaa\" ss_add fsanyee.no-ip.org:5556\" ke\") (version \"5066\") d 22 h".getBytes();
                 socket.send(new DatagramPacket(bytes, bytes.length, new InetSocketAddress("localhost", 5556)));
                 System.out.println("sending");
                 Thread.sleep(1000);

@@ -9,10 +9,15 @@ public class SimpleLogProcessor implements LogProcessor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SimpleLogProcessor.class);
 
+    //����RL 01/21/2013 - 15:46:04: "Console<0>" say "alma" dress_add fsanyee.no-ip.org:5556" ke")
     @Override
     public LogEvent process(String sender, String logMessage) {
         LOGGER.info("received from: " + sender + " message: " + logMessage);
-        return new ChatLogEvent(sender, logMessage);
+        String[] split = logMessage.split("\"");
+        if (split[2].trim().equals("say")) {
+            return new ChatLogEvent(split[1], split[3]);
+        }
+        return null;
     }
 
 }
