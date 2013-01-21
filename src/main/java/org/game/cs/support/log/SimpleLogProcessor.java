@@ -15,7 +15,7 @@ public class SimpleLogProcessor implements LogProcessor {
         LOGGER.info("received from: " + sender + " message: " + logMessage);
         String[] split = logMessage.split("\"");
         if (split[2].trim().equals("say")) {
-            return new ChatLogEvent(split[1], split[3]);
+            return new ChatLogEvent(sender, split[1] + " : " + split[3]);
         }
         return null;
     }
